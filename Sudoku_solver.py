@@ -76,3 +76,62 @@ class Population(object):
 
 
 
+class Candidate(object):
+    """ A candidate solutions to the Sudoku puzzle. """
+
+    def __init__(self):
+        self.values = np.zeros((Nd, Nd))
+        self.fitness = None
+
+
+    def update_fitness(self):
+        """ The fitness of a candidate solution is determined by how close it is to being the actual solution to the puzzle.
+        The actual solution (i.e. the 'fittest') is defined as a 9x9 grid of numbers in the range [1, 9]
+        where each row, column and 3x3 block contains the numbers [1, 9] without any duplicates;
+        if there are any duplicates then the fitness will be lower. """
+
+        column_count = np.zeros(Nd)
+        block_count = np.zeros(Nd)
+        column_sum = 0
+        block_sum = 0
+
+        self.values = self.values.astype(int)
+        # For each column....
+        for j in range(0, Nd):
+            for i in range(0, Nd):
+                column_count[self.values[i][j] - 1] += 1
+
+            for k in range(len(column_count)):
+                if column_count[k] == 1:
+                    column_sum += (1/Nd)/Nd
+            column_count = np.zeros(Nd)
+
+        # For each block...
+        for i in range(0, Nd, 3):
+            for j in range(0, Nd, 3):
+                block_count[self.values[i][j] - 1] += 1
+                block_count[self.values[i][j + 1] - 1] += 1
+                block_count[self.values[i][j + 2] - 1] += 1
+
+                block_count[self.values[i + 1][j] - 1] += 1
+                block_count[self.values[i + 1][j + 1] - 1] += 1
+                block_count[self.values[i + 1][j + 2] - 1] += 1
+
+                block_count[self.values[i + 2][j] - 1] += 1
+                block_count[self.values[i + 2][j + 1] - 1] += 1
+                block_count[self.values[i + 2][j + 2] - 1] += 1
+
+                # duplicate
+                for k in range(len(block_count)):
+                    if block_count[k] == 1:
+                        block_sum += (1/Nd)/Nd
+                block_count = np.zeros(Nd)
+
+        # Calculate overall fitness.
+        if int(column_sum) == 1 and int(block_sum) == 1:
+            fitness = 1.0
+        else:
+            fitness = column_sum * block_sum
+
+        self.fitness = fitness
+
