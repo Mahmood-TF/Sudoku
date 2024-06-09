@@ -182,3 +182,10 @@ class Fixed(Candidate):
             if self.values[row][column] == value:
                 return True
         return False
+    
+    def is_column_duplicate(self, column, value):
+        """ Check duplicate in a column. """
+        for row in range(0, Nd):
+            if self.values[row][column] == value:
+                return True
+        return False
