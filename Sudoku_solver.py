@@ -207,6 +207,16 @@ class Fixed(Candidate):
             return True
         else:
             return False
+    
+    def make_index(self, v):
+        if v <= 2:
+            return 0
+        elif v <= 5:
+            return 3
+        else:
+            return 6
+        
+        
         
         
     
