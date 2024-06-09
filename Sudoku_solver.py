@@ -216,7 +216,23 @@ class Fixed(Candidate):
         else:
             return 6
         
-        
+    
+    def no_duplicates(self):
+        for row in range(0, Nd):
+            for col in range(0, Nd):
+                if self.values[row][col] != 0:
+
+                    cnt1 = list(self.values[row]).count(self.values[row][col])
+                    cnt2 = list(self.values[:,col]).count(self.values[row][col])
+
+                    block_values = [y[self.make_index(col):self.make_index(col)+3] for y in
+                                    self.values[self.make_index(row):self.make_index(row)+3]]
+                    block_values_ = [int(x) for y in block_values for x in y]
+                    cnt3 = block_values_.count(self.values[row][col])
+
+                    if cnt1 > 1 or cnt2 > 1 or cnt3 > 1:
+                        return False
+        return True
         
         
     
