@@ -168,3 +168,17 @@ class Candidate(object):
                         success = True
 
         return success
+
+
+class Fixed(Candidate):
+    """ fixed/given values. """
+
+    def __init__(self, values):
+        self.values = values
+
+    def is_row_duplicate(self, row, value):
+        """ Check duplicate in a row. """
+        for column in range(0, Nd):
+            if self.values[row][column] == value:
+                return True
+        return False
