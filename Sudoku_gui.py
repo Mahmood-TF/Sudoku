@@ -47,3 +47,16 @@ class SudokuGUI(Frame):
             data = json.load(f)
         self.easy = data['Easy']
         self.hard = data['Hard']
+        
+    
+    def new_game(self):
+        level = self.lvVar.get()
+        if level == "Easy":
+            self.given = self.easy[random.randint(0,len(self.easy)-1)]
+        elif level == "Hard":
+            self.given = self.hard[random.randint(0, len(self.hard)-1)]
+
+        else:
+            self.given = [[0 for x in range(9)] for y in range(9)]
+        self.grid = np.array(list(self.given)).reshape((9,9)).astype(int)
+        self.sync_board_and_canvas()    
