@@ -82,3 +82,31 @@ class SudokuGUI(Frame):
                         "\n" + "Time elapsed: " + str(time_elapsed) + "s"
             Label(self.bframe, text=str_print, relief="solid", justify=LEFT).pack()
             self.bframe.pack()
+            
+    
+    def make_grid(self):
+        ( w,h ) = (256,256)
+        c = Canvas(self, bg=self.rgb(128,128,128), width=2*w, height=h)
+        c.pack(side='top', fill='both', expand='1')
+
+        self.rects = [[None for x in range(18)] for y in range(18)]
+        self.handles = [[None for x in range(18)] for y in range(18)]
+        rsize = w/9
+        guidesize = h/3
+
+        for y in range(18):
+            for x in range(18):
+                (xr, yr) = (x*guidesize, y*guidesize)
+                if x < 3:
+                    self.rects[y][x] = c.create_rectangle(xr, yr, xr+guidesize,
+                                                    yr+guidesize, width=4, fill='green')
+                else:
+                    self.rects[y][x] = c.create_rectangle(xr, yr, xr+guidesize,
+                                                    yr+guidesize, width=4, fill='gray')
+                (xr, yr) = (x*rsize, y*rsize)
+                r = c.create_rectangle(xr, yr, xr+rsize, yr+rsize)
+                t = c.create_text(xr + rsize / 2, yr + rsize / 2)
+                self.handles[y][x] = (r, t)
+
+        self.canvas = c
+        self.sync_board_and_canvas()
