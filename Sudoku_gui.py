@@ -38,3 +38,6 @@ class SudokuGUI(Frame):
 
         self.bframe.pack(side='bottom', fill='x', expand='1')
         self.pack()
+        
+    def rgb(self, red, green, blue):
+        return "#%02x%02x%02x" % (red, green, blue)
