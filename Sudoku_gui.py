@@ -59,4 +59,26 @@ class SudokuGUI(Frame):
         else:
             self.given = [[0 for x in range(9)] for y in range(9)]
         self.grid = np.array(list(self.given)).reshape((9,9)).astype(int)
-        self.sync_board_and_canvas()    
+        self.sync_board_and_canvas()   
+        
+
+    def solver(self):
+        s = gss.Sudoku()
+        s.load(self.grid)
+        start_time = time.time()
+        generation, solution = s.solve()
+        if (solution):
+            if generation == -1:
+                print("Invalid inputs")
+                str_print = "Invalid input, please try to generate new game"
+            elif generation == -2:
+                print("No solution found")
+                str_print = "No solution found, please try again"
+            else:
+                self.grid_2 = solution.values
+                self.sync_board_and_canvas_2()
+                time_elapsed = '{0:6.2f}'.format(time.time()-start_time)
+                str_print = "Solution found at generation: " + str(generation) + \
+                        "\n" + "Time elapsed: " + str(time_elapsed) + "s"
+            Label(self.bframe, text=str_print, relief="solid", justify=LEFT).pack()
+            self.bframe.pack()
