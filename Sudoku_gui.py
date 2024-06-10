@@ -110,3 +110,25 @@ class SudokuGUI(Frame):
 
         self.canvas = c
         self.sync_board_and_canvas()
+        
+    def sync_board_and_canvas(self):
+        g = self.grid
+        for y in range(9):
+            for x in range(9):
+                if g[y][x] != 0:
+                    self.canvas.itemconfig(self.handles[y][x][1],
+                                        text=str(g[y][x]))
+                else:
+                    self.canvas.itemconfig(self.handles[y][x][1],
+                                        text='')
+    def sync_board_and_canvas_2(self):
+        g = self.grid_2
+        for y in range(9):
+            for x in range(9):
+                self.canvas.itemconfig(self.handles[y][x+9][1],
+                                    text=str(g[y][x]))
+
+file = "Sudoku_database.json"
+tk = Tk()
+gui = SudokuGUI(tk,file)
+gui.mainloop()
