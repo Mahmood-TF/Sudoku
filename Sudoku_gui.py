@@ -41,3 +41,9 @@ class SudokuGUI(Frame):
         
     def rgb(self, red, green, blue):
         return "#%02x%02x%02x" % (red, green, blue)
+    
+    def load_db (self, file):
+        with open(file) as f:
+            data = json.load(f)
+        self.easy = data['Easy']
+        self.hard = data['Hard']
