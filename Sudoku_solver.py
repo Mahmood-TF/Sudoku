@@ -148,7 +148,6 @@ class Candidate(object):
         if r < mutation_rate:  # Mutate.
             while not success:
                 row1 = random.randint(0, 8)
-                row2 = random.randint(0, 8)
                 row2 = row1
 
                 from_column = random.randint(0, 8)
